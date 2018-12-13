@@ -12,7 +12,6 @@ function renderGame() {
             memoryCard = createDomElement('div', {className: 'memory-card'}, game);
             createDomElement('img', {className: 'hidden', src: `style/img/${arr[j]}.jpg`}, memoryCard);
         }
-
     }
     function createDomElement(tagName, config, tagToAdd) {
         let tag = document.createElement(tagName);
@@ -44,13 +43,15 @@ function showFlag(e) {
     firstCard.classList.add('shown');
     flippedCardList.push(firstCard);
 };
-
+function removeShown(){
+    flippedCardList[0].classList.remove('shown');
+    flippedCardList[1].classList.remove('shown');
+    flippedCardList = [];
+}
 function hideOrRemoveFlag(e) {
     secondCard = e.target;
     secondCard.classList.add('shown');
     flippedCardList.push(secondCard);
-
-    console.log(flippedCardList);
 
     if (firstCard === secondCard) {
         flippedCardList.splice(1, 1);
@@ -58,10 +59,7 @@ function hideOrRemoveFlag(e) {
 
     if (flippedCardList.length == 3) {
         alert("Do not rush!");
-        for (let i = 0; i < flippedCardList.length; i++) {
-            flippedCardList[i].classList.remove('shown');
-        }
-        flippedCardList = [];
+        removeShown();
         return;
     }
 
@@ -81,11 +79,7 @@ function hideOrRemoveFlag(e) {
             }
         }, 500);
     } else {
-        setTimeout(function () {
-            flippedCardList[0].classList.remove('shown');
-            flippedCardList[1].classList.remove('shown');
-            flippedCardList = [];
-        }, 500)
+        setTimeout(removeShown, 500)
     }
 };
 
